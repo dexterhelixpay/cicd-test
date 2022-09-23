@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          cat "${{ secrets.TEST_ENV }}" >> .env
+          echo "${{ secrets.TEST_ENV }}" >> .env
       - run: php artisan test
 
  

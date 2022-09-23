@@ -1,13 +1,8 @@
 
 name: API-Main
 
-env:
-  TEST_ENV: ${{ secrets.TEST_ENV }}
-
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 
@@ -26,7 +21,7 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          echo "$TEST_ENV" >> .env
+          echo "${{ secrets.TEST_ENV }}" ">> .env
       - run: php artisan test
 
  

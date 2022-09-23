@@ -26,3 +26,4 @@ jobs:
           echo "${{secrets.ENV_DEV_A}}" > .env
       - run: cat .env
 
+ 

@@ -28,5 +28,6 @@ jobs:
       - run: |
           composer install
           ls -a
+          cat .env
           
 

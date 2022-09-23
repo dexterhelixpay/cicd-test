@@ -21,5 +21,6 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - run: |
-          echo Add other actions to build,
+          echo Add other actions to build
+          git status
 

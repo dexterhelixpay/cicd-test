@@ -20,13 +20,6 @@ jobs:
       image: cimg/php:8.1.9-node
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - run: git status
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
+      - run: |
           echo Add other actions to build,
-          echo test, and deploy your project.
+

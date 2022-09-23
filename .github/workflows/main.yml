@@ -27,7 +27,7 @@ jobs:
       - run: |
           composer install
           touch .env
-          cp $TEST_ENV .env
+          echo $TEST_ENV >> .env
           cat .env
 
  

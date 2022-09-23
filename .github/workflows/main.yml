@@ -7,8 +7,6 @@ on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,7 +16,8 @@ jobs:
   # This workflow contains a single job called "build"
   prod-build:
     runs-on: ubuntu-latest
-    container: cimg/php:8.1.9-node
+    container: 
+      image: cimg/php:8.1.9-node
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it

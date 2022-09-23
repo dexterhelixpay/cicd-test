@@ -26,9 +26,7 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          echo $TEST_ENV >> .env
-          php artisan config:cache
-      - run: cat .env
+          echo "$TEST_ENV" >> .env
       - run: php artisan test
 
  

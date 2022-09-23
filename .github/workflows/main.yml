@@ -24,6 +24,7 @@ jobs:
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       - uses: actions/checkout@v3
         with:
+          ref: main
           fetch-depth: 1
       - run: |
           composer install

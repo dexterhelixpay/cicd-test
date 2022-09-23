@@ -27,8 +27,7 @@ jobs:
       - run: |
           composer install
           echo $TEST_ENV >> .env
-          php artisan key:generate
-          chmod -R 777 storage bootstrap/cache
+          php artisan config:cache
       - run: cat .env
       - run: php artisan test
 

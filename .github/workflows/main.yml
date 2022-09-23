@@ -24,7 +24,7 @@ jobs:
           composer install
           touch .env
           php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php artisan:generate
+          php artisan key:generate
           cat .env
           php artisan test
 

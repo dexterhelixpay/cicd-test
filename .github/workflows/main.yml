@@ -25,9 +25,9 @@ jobs:
           ref: main
           fetch-depth: 1
       - run: |
-          echo $TEST_ENV
           composer install
           touch .env
+          cp $TEST_ENV .env
           cat .env
 
  

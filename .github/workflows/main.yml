@@ -19,6 +19,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+          if: ${{ github.base_ref == 'main' }}
       - run: |
           composer install
           echo "${{ secrets.TEST_ENV }}" >> .env

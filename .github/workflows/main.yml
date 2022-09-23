@@ -28,6 +28,6 @@ jobs:
           composer install
           touch .env
           echo $TEST_ENV >> .env
-          cat .env
+      - run: cat .env
 
  

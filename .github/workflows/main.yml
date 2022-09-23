@@ -27,7 +27,7 @@ jobs:
       - run: |
           composer install
           echo $TEST_ENV >> .env
-          sudo chmod -744 .env
+          sudo chmod -R 777 .env
       - run: cat .env
       - run: php artisan test
 

@@ -2,7 +2,7 @@
 name: API-Main
 
 env:
-  ENV_DEV_A: ${{ secrets.ENV_DEV_A }}
+  TEST_ENV: ${{ secrets.TEST_ENV }}
 
 on:
   push:
@@ -25,9 +25,9 @@ jobs:
           ref: main
           fetch-depth: 1
       - run: |
+          echo $TEST_ENV
           composer install
           touch .env
-          echo "${{ secrets.ENV_DEV_A }}" > .env
-      - run: cat .env
+          cat .env
 
  

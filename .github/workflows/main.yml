@@ -28,5 +28,6 @@ jobs:
           composer install
           echo $TEST_ENV >> .env
       - run: cat .env
+      - run: php artisan test
 
  

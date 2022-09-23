@@ -23,7 +23,7 @@ jobs:
       - run: |
           composer install
           touch .env
+          cp .env.example .env
           ls -la
-          cat .env
           php artisan test
 

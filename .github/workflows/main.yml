@@ -21,9 +21,10 @@ jobs:
           ref: main
           fetch-depth: 1
       - run: |
+          composer update
           composer install
           touch .env
-          cp .env.example .env
-          ls -la
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          ls -a
           php artisan test
 

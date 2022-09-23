@@ -23,8 +23,6 @@ jobs:
       - run: |
           composer install
           touch .env
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
-          php artisan key:generate
+          cp .env.example .env
           cat .env
-          php artisan test
 

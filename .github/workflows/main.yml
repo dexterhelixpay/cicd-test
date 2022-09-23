@@ -26,7 +26,6 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          touch .env
           echo $TEST_ENV >> .env
       - run: cat .env
 

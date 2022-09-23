@@ -1,11 +1,14 @@
 
-name: CI
+name: HelixPay-API-CI
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+.get-composer: &get-composer
+  - composer install
 
 jobs:
   prod-build:
@@ -20,9 +23,9 @@ jobs:
         with:
           fetch-depth: 1
       - run: |
-          composer install
+          *get-composer
           touch .env
           ls -la
-          
+
           
 

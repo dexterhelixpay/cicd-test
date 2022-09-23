@@ -22,8 +22,9 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          git config --global --add safe.directory $GITHUB_WORKSPACE /github /__w/_temp
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - run: git status
           
 

@@ -23,6 +23,6 @@ jobs:
       - run: |
           composer install
           touch .env
-          cp ${{ secrets.ENV_DEV_A }} .env
+          echo "${{secrets.ENV_DEV_A}}" > .env
           cat .env
 

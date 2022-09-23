@@ -1,11 +1,15 @@
 
 name: API-Main
 
+env:
+  ENV_DEV_A: ${{ secrets.ENV_DEV_A }}
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
 
 jobs:
   prod-build:
@@ -23,7 +27,7 @@ jobs:
       - run: |
           composer install
           touch .env
-          echo "${{secrets.ENV_DEV_A}}" > .env
+          echo "${{ secrets.ENV_DEV_A }}" > .env
       - run: cat .env
 
  

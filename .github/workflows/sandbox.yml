@@ -12,7 +12,7 @@ jobs:
     container: 
       image: cimg/php:8.1.9-node
     steps:
-      - name: setup file system permissions
+      - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       
@@ -21,11 +21,11 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: get composer
+      - name: Get composer
         run: |
           composer install
 
-      - name: set-up api
+      - name: Set-up api
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" >> .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
@@ -45,7 +45,7 @@ jobs:
     container: 
       image: cimg/php:8.1.9-node
     steps:
-      - name: setup file system permissions
+      - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       
@@ -54,15 +54,15 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: get composer
+      - name: Get composer
         run: composer install
       
-      - name: download artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           name: config_and_api
       
-      - name: test api
+      - name: Test API
         run: php artisan test
 
   sandbox_deploy:
@@ -71,7 +71,7 @@ jobs:
     container: 
       image: cimg/php:8.1.9-node
     steps:
-      - name: setup file system permissions
+      - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       
@@ -80,17 +80,18 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: get composer and cli
+      - name: Get composer and cli
         run: |
           composer install
       
-      - name: download artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           name: config_and_api
       
       - name: deploy to elasticbeanstalk
         run: |
+          sudo apt-get update
           sudo apt install python3-pip
           pip3 install awsebcli
           pip3 install awscli

@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          cp "${{ secrets.CONFIG_API_DEV_A }}" .elasticbeanstalk/config.yml
+          echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
           cat .env
           cat .elasticbeanstalk/config.yml

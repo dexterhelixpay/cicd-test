@@ -93,14 +93,14 @@ jobs:
       - name: Install CLI
         run: |
           sudo apt-get update
-          sudo apt install python3-pip
-          pip install awsebcli
-          pip install awscli
+          sudo apt-get install python3-pip
+          pip3 install awsebcli
+          pip3 install awscli
 
       - name: Deploy to Elasticbeanstalk
         run: |
           eb list
-          
+
 
 
  

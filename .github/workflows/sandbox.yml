@@ -93,8 +93,8 @@ jobs:
       - name: Install CLI
         run: |
           sudo add-apt-repository universe
-          sudo apt-get update
-          sudo apt-get install python-pip
+          sudo apt update
+          sudo apt install python-pip
           pip install awsebcli
           pip install awscli
 

@@ -1,0 +1,12 @@
+{
+    "Parameters": {
+        "workingDirectory":[
+            "/var/www/html"
+        ],
+        "commands": [
+                "sudo chmod -R 777 storage",
+                "php artisan migrate --force",
+                "php artisan db:seed --force"
+        ]
+    }
+}

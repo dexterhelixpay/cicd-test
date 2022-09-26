@@ -13,10 +13,13 @@ return [
     |
     */
 
+    'code' => 'This password reset code is invalid.',
+    'expired' => 'Your password has expired.',
     'reset' => 'Your password has been reset!',
     'sent' => 'We have emailed your password reset link!',
     'throttled' => 'Please wait before retrying.',
     'token' => 'This password reset token is invalid.',
+    'used' => 'The password must not match any older passwords.',
     'user' => "We can't find a user with that email address.",
 
 ];

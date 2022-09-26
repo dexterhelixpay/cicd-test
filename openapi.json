@@ -1,0 +1,38 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "BukoPay",
+    "description": "API for BukoPay services",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api-sandbox.bukopay.ph",
+      "description": "Sandbox server for testing"
+    }
+  ],
+  "paths": {
+    "/v1/merchants/{merchant}/subscriptions": {
+      "parameters": [
+        {
+          "name": "merchant",
+          "in": "path",
+          "required": true,
+          "description": "The merchant ID",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "post": {
+        "summary": "Create a new subscription.",
+        "tags": ["Subscriptions"],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    }
+  }
+}

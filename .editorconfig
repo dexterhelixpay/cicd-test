@@ -8,11 +8,21 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
+[*.blade.php]
+indent_size = 2
+
+[*.json]
+insert_final_newline = false
+
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml}]
+[*.{js,json,yml,yaml}]
 indent_size = 2
 
-[docker-compose.yml]
+[.ebextensions/*.config]
+indent_size = 2
+insert_final_newline = false
+
+[composer.json]
 indent_size = 4

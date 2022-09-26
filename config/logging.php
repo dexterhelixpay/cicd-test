@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -21,22 +22,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Deprecations Log Channel
-    |--------------------------------------------------------------------------
-    |
-    | This option controls the log channel that should be used to log warnings
-    | regarding deprecated PHP and library features. This allows you to get
-    | your application ready for upcoming major versions of dependencies.
-    |
-    */
-
-    'deprecations' => [
-        'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
-        'trace' => false,
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Log Channels
     |--------------------------------------------------------------------------
     |
@@ -53,7 +38,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'cloudwatch'],
             'ignore_exceptions' => false,
         ],
 
@@ -81,11 +66,10 @@ return [
         'papertrail' => [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
-            'handler' => env('LOG_PAPERTRAIL_HANDLER', SyslogUdpHandler::class),
+            'handler' => SyslogUdpHandler::class,
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
             ],
         ],
 
@@ -116,6 +100,35 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'cloudwatch' => [
+            'driver' => 'custom',
+            'name' => env('CLOUDWATCH_LOG_NAME', ''),
+            'region' => env('CLOUDWATCH_LOG_REGION', ''),
+            'credentials' => [
+                'key' => env('CLOUDWATCH_LOG_KEY', ''),
+                'secret' => env('CLOUDWATCH_LOG_SECRET', '')
+            ],
+            'stream_name' => env('CLOUDWATCH_LOG_STREAM_NAME', 'laravel_app'),
+            'retention' => env('CLOUDWATCH_LOG_RETENTION_DAYS', 14),
+            'group_name' => env('CLOUDWATCH_LOG_GROUP_NAME', 'laravel_app'),
+            'version' => env('CLOUDWATCH_LOG_VERSION', 'latest'),
+            'formatter' => \Monolog\Formatter\JsonFormatter::class,
+            'batch_size' => env('CLOUDWATCH_LOG_BATCH_SIZE', 10000),
+            'via' => \Pagevamp\Logger::class,
+        ],
+
+        'login' => [
+            'driver' => 'stack',
+            'channels' => ['accesslog', 'cloudwatch'],
+            'ignore_exceptions' => false,
+        ],
+
+        'accesslog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/access.log'),
+            'level' => 'error',
         ],
     ],
 

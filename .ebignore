@@ -1,0 +1,24 @@
+# Application
+
+/.git
+/public/storage
+/storage/*/
+!/storage/images/*
+!/storage/app/*.csv
+!/storage/app/*.xlsx
+!/storage/logs/.gitignore
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/testing/.gitignore
+!/storage/framework/views/.gitignore
+.env.*
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# IDE Helper
+
+_ide_helper*.php

@@ -1,21 +1,26 @@
 /node_modules
-/public/build
 /public/hot
 /public/storage
-/storage/*.key
 /vendor
 .env
-.env.backup
+.env.*
 .phpunit.result.cache
+docker-compose.override.yml
 Homestead.json
 Homestead.yaml
-auth.json
 npm-debug.log
 yarn-error.log
-/.idea
-/.vscode
 
 # Elastic Beanstalk Files
+
 # .elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+# !.elasticbeanstalk/*.cfg.yml
+# !.elasticbeanstalk/*.global.yml
+
+# IDE Helper
+
+_ide_helper*
+
+# OS
+
+.DS_Store

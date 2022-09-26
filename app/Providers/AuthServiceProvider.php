@@ -2,15 +2,18 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Auth\Guards\ApiKeyGuard;
+use App\Auth\Guards\NullGuard;
+use App\Auth\NullUserProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Passport;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The model to policy mappings for the application.
+     * The policy mappings for the application.
      *
-     * @var array<class-string, class-string>
+     * @var array
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
@@ -25,6 +28,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::extend('null', function () {
+            return new NullGuard;
+        });
+
+        Auth::provider('null', function () {
+            return new NullUserProvider;
+        });
+
+        Auth::viaRequest('api', new ApiKeyGuard);
+
+        Passport::personalAccessTokensExpireIn(now()->addYear());
     }
 }

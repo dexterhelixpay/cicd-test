@@ -3,8 +3,8 @@ name: API-Main
 
 on:
   push:
-    branches: [ "main" ]
-
+    branches: 
+      - main
 
 jobs:
   prod-build:
@@ -21,7 +21,10 @@ jobs:
           fetch-depth: 1
       - run: |
           composer install
-          echo "${{ secrets.TEST_ENV }}" >> .env
-      - run: php artisan test
+          cp "${{ secrets.CONFIG_API_DEV_A }}" .elasticbeanstalk/config.yml
+          echo "${{ secrets.ENV_API_DEV_A }}" >> .env
+          cat .env
+          cat .elasticbeanstalk/config.yml
+          
 
  

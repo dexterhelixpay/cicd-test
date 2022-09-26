@@ -33,7 +33,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: config and api
+          name: config_and_api
           path:
             .env
             vendor/
@@ -60,9 +60,9 @@ jobs:
       - name: download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config and api
+          name: config_and_api
       
-      - name: test  api
+      - name: test api
         run: php artisan test
 
 
@@ -93,7 +93,7 @@ jobs:
       - name: download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config and api
+          name: config_and_api
       
       - name: deploy to elasticbeanstalk
         run: |

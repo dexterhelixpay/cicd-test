@@ -96,7 +96,11 @@ jobs:
           sudo apt install python3-pip
           pip install awsebcli
           pip install awscli
+
+      - name: Deploy to Elasticbeanstalk
+        run: |
           eb list
+          
 
 
  

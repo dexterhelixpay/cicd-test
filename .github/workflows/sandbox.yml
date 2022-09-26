@@ -27,7 +27,7 @@ jobs:
 
       - name: Get API
         run: |
-          echo "${{ secrets.CONFIG_API_DEV_A }}" >> .elasticbeanstalk/config.yml
+          echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
           
       - name: Upload artifacts
@@ -61,8 +61,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: config_and_api
-          
-      
+  
       - name: Test API
         run: php artisan test
 
@@ -90,17 +89,16 @@ jobs:
         with:
           name: config_and_api
       
-      - name: Install CLI
+      - name: Install CLI 
         run: |
           sudo add-apt-repository universe
           sudo apt update
           sudo apt-get install python3-pip
-          sudo pip3 install awsebcli
           sudo pip3 install awscli
 
       - name: Deploy to Elasticbeanstalk
         run: |
-          eb list
+          eb deploy
 
 
 

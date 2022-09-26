@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   sandbox_api_build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     container: 
       image: cimg/php:8.1.9-node
     steps:
@@ -44,7 +44,7 @@ jobs:
           retention-days: 1
     
   sandbox_api_test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [sandbox_api_build]
     container: 
       image: cimg/php:8.1.9-node
@@ -52,7 +52,6 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp/_runner_file_commands
       
       - uses: actions/checkout@v3
         with:
@@ -71,7 +70,7 @@ jobs:
         run: php artisan test
 
   sandbox_api_deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [sandbox_api_build, sandbox_api_test]
     container: 
       image: cimg/php:8.1.9-node

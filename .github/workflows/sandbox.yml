@@ -33,7 +33,11 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: .env
+          name: config_and_api
+          path: |
+            .env
+            vendor/
+            .elasticbeanstalk/config.yml
           retention_days: 1
     
   sandbox_test:

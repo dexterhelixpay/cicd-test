@@ -52,6 +52,7 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp/_runner_file_commands
       
       - uses: actions/checkout@v3
         with:
@@ -78,9 +79,7 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chown -R circleci /github
 
-      
       - uses: actions/checkout@v3
         with:
           ref: main

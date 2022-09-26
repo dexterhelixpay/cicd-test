@@ -36,7 +36,6 @@ jobs:
           name: config_and_api
           path: |
             .env
-            vendor/
             .elasticbeanstalk/config.yml
           retention_days: 1
     
@@ -84,11 +83,6 @@ jobs:
       - name: get composer and cli
         run: |
           composer install
-          sudo add-apt-repository universe
-          sudo apt-get update
-          sudo apt-get install python3-pip
-          pip3 install awsebcli
-          pip3 install awscli
       
       - name: download artifacts
         uses: actions/download-artifact@v3
@@ -97,6 +91,9 @@ jobs:
       
       - name: deploy to elasticbeanstalk
         run: |
+          sudo apt-get install python3-pip
+          pip3 install awsebcli
+          pip3 install awscli
           eb list
 
 

@@ -95,7 +95,8 @@ jobs:
           sudo add-apt-repository universe
           sudo apt update
           sudo apt-get install python3-pip
-          pip3 install awsebcli
+          sudo pip3 install awsebcli
+          sudo pip3 install awscli
 
       - name: Deploy to Elasticbeanstalk
         run: |

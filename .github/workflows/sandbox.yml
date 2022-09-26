@@ -21,11 +21,11 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: Get composer
+      - name: Install composer
         run: |
           composer install
 
-      - name: Set-up api
+      - name: Get API
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" >> .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
@@ -37,7 +37,7 @@ jobs:
           path: |
             .env
             .elasticbeanstalk/config.yml
-          retention_days: 1
+          retention-days: 1
     
   sandbox_test:
     runs-on: ubuntu-latest
@@ -54,13 +54,14 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: Get composer
+      - name: Install composer
         run: composer install
       
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           name: config_and_api
+          
       
       - name: Test API
         run: php artisan test
@@ -80,7 +81,7 @@ jobs:
           ref: main
           fetch-depth: 1
       
-      - name: Get composer and cli
+      - name: Install composer
         run: |
           composer install
       
@@ -89,7 +90,7 @@ jobs:
         with:
           name: config_and_api
       
-      - name: deploy to elasticbeanstalk
+      - name: Install CLI
         run: |
           sudo apt-get update
           sudo apt install python3-pip

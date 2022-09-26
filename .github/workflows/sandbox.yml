@@ -35,9 +35,9 @@ jobs:
         with:
           name: config_and_api
           path:
-            .env
-            vendor/
-            .elasticbeanstalk/config.yml
+            $GITHUB_WORKSPACE/.env
+            $GITHUB_WORKSPACE/vendor/
+            $GITHUB_WORKSPACE/.elasticbeanstalk/config.yml
     
   sandbox_test:
     runs-on: ubuntu-latest

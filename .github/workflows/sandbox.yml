@@ -7,24 +7,97 @@ on:
       - main
 
 jobs:
-  prod-build:
+  sandbox_build:
     runs-on: ubuntu-latest
     container: 
       image: cimg/php:8.1.9-node
     steps:
-      - name: Setup file system permissions
+      - name: setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+      
       - uses: actions/checkout@v3
         with:
           ref: main
           fetch-depth: 1
-      - run: |
+      
+      - name: get composer
+        run: |
           composer install
+
+      - name: set-up api
+        run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" >> .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
-          cat .env
-          cat .elasticbeanstalk/config.yml
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifacts@v3
+        with:
+          name: config and api
+          path:
+            - .env
+            - vendor/
+           - .elasticbeanstalk/config.yml
+    
+  sandbox_test:
+    runs-on: ubuntu-latest
+    needs: [sandbox_build]
+    container: 
+      image: cimg/php:8.1.9-node
+    steps:
+      - name: setup file system permissions
+        run: |
+          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+      
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 1
+      
+      - name: get composer
+        run: composer install
+      
+      - name: download artifacts
+        uses: actions/downloads-artifacts@v3
+        with:
+          name: config and api
+      
+      - name: test  api
+        run: php artisan test
+
+
+  sandbox_deploy:
+    runs-on: ubuntu-latest
+    needs: [sandbox_build, sandbox_test]
+    container: 
+      image: cimg/php:8.1.9-node
+    steps:
+      - name: setup file system permissions
+        run: |
+          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+      
+      - uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 1
+      
+      - name: get composer and cli
+        run: |
+          composer install
+          sudo add-apt-repository universe
+          sudo apt-get update
+          sudo apt-get install python3-pip
+          pip3 install awsebcli
+          pip3 install awscli
+      
+      - name: download artifacts
+        uses: actions/downloads-artifacts@v3
+        with:
+          name: config and api
+      
+      - name: deploy to elasticbeanstalk
+        run: |
+          eb list
           
 
  

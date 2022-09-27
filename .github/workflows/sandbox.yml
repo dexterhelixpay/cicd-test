@@ -62,7 +62,7 @@ jobs:
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
           sudo chmod 666 /var/run/docker.sock
-          sudo chown -R ubuntu:docker /__w/
+          sudo chown -R root /__w/
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Configure AWS credentials

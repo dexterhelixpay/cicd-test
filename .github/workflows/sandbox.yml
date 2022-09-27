@@ -24,7 +24,6 @@ jobs:
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
           echo "${{ secrets.ENV_API_DEV_A }}" >> .env
-          whoami
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -62,7 +61,9 @@ jobs:
       image: cimg/php:8.1.9-node
     steps:
       - name: Setup file system permissions
-        run: sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+        run: |
+          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+          sudo chown -R whoami $GITHUB_WORKSPACE /github /__w/_temp
       - name: Git clone the repository
         uses: actions/checkout@v3
         with:

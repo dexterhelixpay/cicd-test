@@ -1,7 +1,7 @@
 on:
   push:
     branches: 
-      - main
+      - features/dev-a
 
 env:
   ###################################
@@ -17,6 +17,9 @@ env:
   SANDBOX_API: "helixpay-sandbox-api"
   PROD_API: "helixpay-production-api"
 
+  ###################################
+  #             WORKER              #
+  ###################################
   DEV_A_WORKER: "env-dev-a-worker-helixpay"
   DEV_B_WORKER: "env-dev-b-worker-helixpay"
   DEV_C_WORKER: "env-dev-c-worker-helixpay"
@@ -116,8 +119,8 @@ jobs:
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: |
-          eb list
           eb use ${{ env.DEV_A_API }}
+          eb deploy
      # - name: Run seeder
      #   run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
 
@@ -183,5 +186,5 @@ jobs:
         run: sudo rm -r .ebextensions/03_elb_health_check.config .ebextensions/04_http_to_https.config .ebextensions/10_wazuh.config
       - name: Deploy to Elasticbeanstalk
         run: |
-          eb list
           eb use ${{ env.DEV_A_WORKER }}
+          eb deploy

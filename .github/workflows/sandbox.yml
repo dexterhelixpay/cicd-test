@@ -32,6 +32,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+      - run: |
+          git checkout main
+          git pull origin main
       - name: Get API
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml

@@ -68,9 +68,9 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-        - run: |
-            git checkout main
-            git pull origin main
+      - run: |
+          git checkout main
+          git pull origin main
       - name: Install composer
         run: composer install
       - name: Download artifacts

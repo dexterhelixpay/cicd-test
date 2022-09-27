@@ -69,6 +69,8 @@ jobs:
         run: composer install
       - name: Install CLI
         run: |
+          sudo add-apt-repository universe
+          sudo apt-get update
           sudo apt-get install python3-pip
           sudo pip3 install awsebcli
           sudo pip3 install awscli

@@ -64,7 +64,7 @@ jobs:
 
   dev-a-api-deploy:
     runs-on: self-hosted
-    needs: [dev-a-api-_build, dev-a-api-test]
+    needs: [dev-a-api-build, dev-a-api-test]
     container: 
       image: cimg/php:8.1.9-node
       options: --user root

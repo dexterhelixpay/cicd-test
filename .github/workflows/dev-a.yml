@@ -45,9 +45,10 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - run: |
-          git checkout main
-          git pull origin main
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Get API
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
@@ -68,9 +69,10 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - run: |
-          git checkout main
-          git pull origin main
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Install composer
         run: composer install
       - name: Download artifacts
@@ -87,9 +89,10 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - run: |
-          git checkout main
-          git pull origin main
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -129,9 +132,10 @@ jobs:
         image: cimg/php:8.1.9-node
         options: --user root
       steps:
-        - run: |
-            git checkout main
-            git pull origin main
+        - name: checkout
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 1
         - name: Get API
           run: |
             echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
@@ -152,9 +156,10 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - run: |
-          git checkout main
-          git pull origin main
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

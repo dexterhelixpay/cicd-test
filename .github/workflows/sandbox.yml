@@ -6,20 +6,20 @@ on:
       - main
   workflow_dispatch:
 
-  env:
-    ###################################
-    #               API               #
-    ###################################
-    DEV_A_API: "env-dev-a-api-helixpay"
-    DEV_B_API: "env-dev-b-api-helixpay"
-    DEV_C_API: "env-dev-c-api-helixpay"
-    STAGING_A_API: "env-staging-a-api-helixpay"
-    STAGING_B_API: "env-staging-b-api-helixpay"
-    STAGING_C_API: "env-staging-c-api-helixpay"
-    STAGING_API: "env-staging-api-helixpay"
-    SANDBOX_API: "helixpay-sandbox-api"
-    PROD_API: "helixpay-production-api"
-    AWS_REGION: "ap-southeast-1"
+env:
+  ###################################
+  #               API               #
+  ###################################
+  DEV_A_API: "env-dev-a-api-helixpay"
+  DEV_B_API: "env-dev-b-api-helixpay"
+  DEV_C_API: "env-dev-c-api-helixpay"
+  STAGING_A_API: "env-staging-a-api-helixpay"
+  STAGING_B_API: "env-staging-b-api-helixpay"
+  STAGING_C_API: "env-staging-c-api-helixpay"
+  STAGING_API: "env-staging-api-helixpay"
+  SANDBOX_API: "helixpay-sandbox-api"
+  PROD_API: "helixpay-production-api"
+  AWS_REGION: "ap-southeast-1"
 
 permissions:
   id-token: write

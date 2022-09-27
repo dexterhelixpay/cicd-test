@@ -15,8 +15,7 @@ jobs:
   sandbox_api_build:
     runs-on: self-hosted
     container: 
-      docker:
-        image: cimg/php:8.1.9-node
+      image: cimg/php:8.1.9-node
     steps:
       - name: Setup file system permissions
         run: |

@@ -21,8 +21,8 @@ jobs:
           fetch-depth: 1
       - name: Get API
         run: |
-          echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
-          echo "${{ secrets.ENV_API_DEV_A }}" >> .env
+          sudo echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
+          sudo echo "${{ secrets.ENV_API_DEV_A }}" >> .env
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:

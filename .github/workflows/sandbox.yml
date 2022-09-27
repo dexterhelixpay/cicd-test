@@ -114,3 +114,4 @@ jobs:
       - name: Deploy to Elasticbeanstalk
         run: |
           eb deploy
+

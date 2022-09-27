@@ -81,4 +81,7 @@ jobs:
       - name: Exclude for API
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
-        run: eb list
+        run: |
+          ls -la
+          cat .elasticbeanstalk/config.yml
+          eb list

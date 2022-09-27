@@ -20,7 +20,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Get API
-        run: echo "${{ secrets.ENV_API_DEV_A }}" >> .env
+        run: |
+          echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
+          echo "${{ secrets.ENV_API_DEV_A }}" >> .env
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -79,6 +81,4 @@ jobs:
       - name: Exclude for API
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
-        run: |
-          echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml
-          eb deploy
+        run: eb list

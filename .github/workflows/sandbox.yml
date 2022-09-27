@@ -14,14 +14,8 @@ jobs:
   sandbox_api_build:
     runs-on: self-hosted
     steps:
-      - name: Setup file system permissions
-        run: |
-          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
       - name: Git clone the repository
         uses: actions/checkout@v3
-        with:
-          ref: main
-          fetch-depth: 1
       - name: Get API
         run: |
           echo "${{ secrets.CONFIG_API_DEV_A }}" > .elasticbeanstalk/config.yml

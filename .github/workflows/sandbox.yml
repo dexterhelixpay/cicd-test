@@ -15,7 +15,7 @@ jobs:
   sandbox_api_build:
     runs-on: self-hosted
     steps:
-      - name: Git clone the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           ref: main
@@ -43,7 +43,8 @@ jobs:
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
           sudo chmod 666 /var/run/docker.sock
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
           ref: main
           fetch-depth: 1
@@ -66,11 +67,8 @@ jobs:
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
           sudo chmod 666 /var/run/docker.sock
-      - name: Git clone the repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
-        with:
-          ref: main
-          fetch-depth: 1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

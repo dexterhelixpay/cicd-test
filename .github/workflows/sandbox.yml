@@ -1,4 +1,7 @@
-
+on:
+  push:
+    branches: 
+      - main
 env:
   ###################################
   #               API               #
@@ -40,10 +43,6 @@ jobs:
             .env
             .elasticbeanstalk/config.yml
           retention-days: 1
-    on:
-      push:
-        branches: 
-          - main
     
   sandbox_api_test:
     runs-on: self-hosted

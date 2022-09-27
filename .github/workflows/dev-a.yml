@@ -45,7 +45,7 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -69,7 +69,7 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -89,7 +89,7 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
@@ -132,7 +132,7 @@ jobs:
         image: cimg/php:8.1.9-node
         options: --user root
       steps:
-        - name: checkout
+        - name: Checkout
           uses: actions/checkout@v3
           with:
             fetch-depth: 1
@@ -156,7 +156,7 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1

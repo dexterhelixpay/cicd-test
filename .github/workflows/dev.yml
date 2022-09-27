@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 jobs:
-  sandbox_api_build:
+  dev-a-api-build:
     runs-on: self-hosted
     container: 
       image: cimg/php:8.1.9-node
@@ -44,9 +44,9 @@ jobs:
             .elasticbeanstalk/config.yml
           retention-days: 1
     
-  sandbox_api_test:
+  dev-a-api-test:
     runs-on: self-hosted
-    needs: [sandbox_api_build]
+    needs: [dev-a-api-build]
     container: 
       image: cimg/php:8.1.9-node
       options: --user root
@@ -62,9 +62,9 @@ jobs:
       - name: Test API
         run: php artisan test
 
-  sandbox_api_deploy:
+  dev-a-api-deploy:
     runs-on: self-hosted
-    needs: [sandbox_api_build, sandbox_api_test]
+    needs: [dev-a-api-_build, dev-a-api-test]
     container: 
       image: cimg/php:8.1.9-node
       options: --user root

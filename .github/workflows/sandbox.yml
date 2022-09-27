@@ -43,7 +43,7 @@ jobs:
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
           sudo chown -R ubuntu $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chown root:docker /var/run/docker.sock
+          sudo chown ubuntu:docker /var/run/docker.sock
       - uses: actions/checkout@v3
         with:
           ref: main

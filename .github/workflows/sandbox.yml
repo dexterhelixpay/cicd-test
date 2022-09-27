@@ -14,6 +14,9 @@ jobs:
   sandbox_api_build:
     runs-on: self-hosted
     steps:
+      - name: Setup file system permissions
+        run: |
+          sudo chmod -R 777 /home/ubuntu/actions-runner/_work
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Get API
@@ -59,6 +62,7 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
+          sudo chmod -R 777 /home/ubuntu/actions-runner/_work
           sudo chmod 666 /var/run/docker.sock
           sudo chown -R ubuntu:docker /__w/
       - name: Checkout repo

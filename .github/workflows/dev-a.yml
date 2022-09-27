@@ -16,6 +16,17 @@ env:
   STAGING_API: "env-staging-api-helixpay"
   SANDBOX_API: "helixpay-sandbox-api"
   PROD_API: "helixpay-production-api"
+
+  DEV_A_WORKER: "env-dev-a-worker-helixpay"
+  DEV_B_WORKER: "env-dev-b-worker-helixpay"
+  DEV_C_WORKER: "env-dev-c-worker-helixpay"
+  STAGING_A_WORKER: "env-staging-a-worker-helixpay"
+  STAGING_B_WORKER: "env-staging-b-worker-helixpay"
+  STAGING_C_WORKER: "env-staging-c-worker-helixpay"
+  STAGING_WORKER: "env-staging-worker-helixpay"
+  SANDBOX_WORKER: "helixpay-sandbox-worker"
+  PROD_WORKER: "helixpay-production-worker"
+
   AWS_REGION: "ap-southeast-1"
 
 permissions:
@@ -23,6 +34,11 @@ permissions:
   contents: read
 
 jobs:
+
+################################################################################################################
+#                                                     API                                                      #
+################################################################################################################
+
   dev-a-api-build:
     runs-on: self-hosted
     container: 
@@ -39,7 +55,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: config_and_api
+          name: config_and_env
           path: |
             .env
             .elasticbeanstalk/config.yml
@@ -51,15 +67,16 @@ jobs:
     container: 
       image: cimg/php:8.1.9-node
       options: --user root
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      steps:
+        - run: |
+            git checkout main
+            git pull origin main
       - name: Install composer
         run: composer install
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config_and_api
+          name: config_and_env
       - name: Test API
         run: php artisan test
 
@@ -70,8 +87,9 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - run: |
+          git checkout main
+          git pull origin main
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -90,15 +108,19 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config_and_api
+          name: config_and_env
       - name: Exclude for API
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: |
           eb list
           eb use ${{ env.DEV_A_API }}
-      #- name: Run seeder
-       # run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
+      - name: Run seeder
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
+
+################################################################################################################
+#                                                     WORKER                                                   #
+################################################################################################################
 
   dev-a-worker-build:
       runs-on: self-hosted
@@ -130,8 +152,9 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - run: |
+          git checkout main
+          git pull origin main
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -151,9 +174,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: config_and_api
-      - name: Exclude for API
-        run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
+      - name: Exclude for worker
+        run: sudo rm -r .ebextensions/03_elb_health_check.config .ebextensions/04_http_to_https.config .ebextensions/10_wazuh.config
       - name: Deploy to Elasticbeanstalk
         run: |
           eb list
-          eb use ${{ env.DEV_A_API }}
+          eb use ${{ env.DEV_A_WORKER }}

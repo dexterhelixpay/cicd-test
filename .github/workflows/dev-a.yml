@@ -1,7 +1,7 @@
 on:
   push:
     branches: 
-      - features/dev-*
+      - features/dev-a
 env:
   ###################################
   #               API               #

@@ -67,7 +67,7 @@ jobs:
     container: 
       image: cimg/php:8.1.9-node
       options: --user root
-      steps:
+    steps:
         - run: |
             git checkout main
             git pull origin main
@@ -115,8 +115,8 @@ jobs:
         run: |
           eb list
           eb use ${{ env.DEV_A_API }}
-      - name: Run seeder
-        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
+     # - name: Run seeder
+     #   run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #

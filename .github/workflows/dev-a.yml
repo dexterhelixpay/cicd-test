@@ -102,6 +102,7 @@ jobs:
 
   dev-a-worker-build:
       runs-on: self-hosted
+      needs: [dev-a-api-build]
       container: 
         image: cimg/php:8.1.9-node
         options: --user root
@@ -124,7 +125,7 @@ jobs:
 
   dev-a-worker-deploy:
     runs-on: self-hosted
-    needs: [dev-a-worker-build]
+    needs: [dev-a-worker-build,dev-a-api-deploy]
     container: 
       image: cimg/php:8.1.9-node
       options: --user root

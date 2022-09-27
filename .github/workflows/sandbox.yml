@@ -86,9 +86,9 @@ jobs:
           sudo pip3 install awsebcli
           sudo pip3 install awscli
       - name: Download artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: config_and_api
+        uses: actions/download-artifact@v3
+        with:
+          name: config_and_api
       - name: Exclude for API
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk

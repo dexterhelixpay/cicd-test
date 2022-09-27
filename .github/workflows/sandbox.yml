@@ -6,6 +6,21 @@ on:
       - main
   workflow_dispatch:
 
+  env:
+    ###################################
+    #               API               #
+    ###################################
+    DEV_A_API: "env-dev-a-api-helixpay"
+    DEV_B_API: "env-dev-b-api-helixpay"
+    DEV_C_API: "env-dev-c-api-helixpay"
+    STAGING_A_API: "env-staging-a-api-helixpay"
+    STAGING_B_API: "env-staging-b-api-helixpay"
+    STAGING_C_API: "env-staging-c-api-helixpay"
+    STAGING_API: "env-staging-api-helixpay"
+    SANDBOX_API: "helixpay-sandbox-api"
+    PROD_API: "helixpay-production-api"
+    AWS_REGION: "ap-southeast-1"
+
 permissions:
   id-token: write
   contents: read
@@ -82,6 +97,9 @@ jobs:
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: |
-          ls -la
-          cat .elasticbeanstalk/config.yml
           eb list
+          eb use ${{ env.DEV_A_API }}
+          eb deploy
+      - name: Run seeder
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.DEV_A_API }}" --cli-input-json file://release/migrate_seed.json --comment "$DEV_A_API" --region ${{ env.AWS_REGION }}
+          

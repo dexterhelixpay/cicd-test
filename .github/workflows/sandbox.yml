@@ -13,9 +13,10 @@ permissions:
 jobs:
   sandbox_api_build:
     runs-on: self-hosted
+    container: 
+      image: cimg/php:8.1.9-node
+      options: --user root
     steps:
-      - name: Setup file system permissions
-        run: sudo chmod -R 777 /home/ubuntu/actions-runner/_work
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Get API
@@ -36,11 +37,8 @@ jobs:
     needs: [sandbox_api_build]
     container: 
       image: cimg/php:8.1.9-node
+      options: --user root
     steps:
-      - name: Setup file system permissions
-        run: |
-          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chmod 666 /var/run/docker.sock
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Install composer
@@ -59,11 +57,6 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: Setup file system permissions
-        run: |
-          sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chmod 666 /var/run/docker.sock
-      
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Configure AWS credentials

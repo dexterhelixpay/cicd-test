@@ -1,4 +1,3 @@
-
 name: Sandbox-API
 
 on:
@@ -65,8 +64,7 @@ jobs:
       - name: Setup file system permissions
         run: |
           sudo chmod -R 777 $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chown -R ubuntu $GITHUB_WORKSPACE /github /__w/_temp
-          sudo chown root:docker /var/run/docker.sock
+          sudo chmod 666 /var/run/docker.sock
       - name: Git clone the repository
         uses: actions/checkout@v3
         with:
@@ -95,4 +93,3 @@ jobs:
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: eb deploy
-

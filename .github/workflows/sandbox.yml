@@ -120,9 +120,9 @@ jobs:
       - name: Deploy to Elasticbeanstalk
         run: |
           eb use ${{ env.SANDBOX_API }}
-          eb deploy
-      - name: Run seeder
-        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
+          eb list
+      #- name: Run seeder
+      #  run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #

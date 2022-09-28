@@ -121,8 +121,8 @@ jobs:
         run: |
           eb use ${{ env.STAGING_C_API }}
           eb deploy
-     - name: Run seeder
-       run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.STAGING_C_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.STAGING_C_API }} --region ${{ env.AWS_REGION }}
+      - name: Run seeder
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.STAGING_C_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.STAGING_C_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #

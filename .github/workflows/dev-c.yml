@@ -2,6 +2,7 @@ on:
   push:
     branches: 
       - features/dev-c
+  workflow_dispatch:
 
 env:
   ###################################
@@ -99,7 +100,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::302489882384:role/helixpay-dev-github-role
+          role-to-assume: ${{ secrets.DEV_ROLE }}
           role-session-name: Deploy-API
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer
@@ -167,7 +168,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::302489882384:role/helixpay-dev-github-role
+          role-to-assume: ${{ secrets.DEV_ROLE }}
           role-session-name: Deploy-Worker
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer

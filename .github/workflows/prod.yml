@@ -100,7 +100,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::903706683286:role/helixpay-production-github-role
+          role-to-assume: ${{ secrets.PROD_ROLE }}
           role-session-name: Deploy-API
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer
@@ -148,7 +148,7 @@ jobs:
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
           with:
-          name: worker_config_and_env
+            name: worker_config_and_env
             path: |
               .env
               .elasticbeanstalk/config.yml
@@ -169,7 +169,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::903706683286:role/helixpay-production-github-role
+          role-to-assume: ${{ secrets.PROD_ROLE }}
           role-session-name: Deploy-API-Production
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer

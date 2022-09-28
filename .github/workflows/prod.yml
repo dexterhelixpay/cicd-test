@@ -59,7 +59,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: config_and_env
+          name: api_config_and_env
           path: |
             .env
             .elasticbeanstalk/config.yml
@@ -81,7 +81,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config_and_env
+          name: api_config_and_env
       - name: Test API
         run: php artisan test
 
@@ -115,15 +115,16 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config_and_env
+          name: api_config_and_env
       - name: Include wazuh agent production
         run: aws s3 cp s3://helixpay-wazuh-agent .platform/hooks/postdeploy/ --recursive
       - name: Deploy to Elasticbeanstalk
         run: |
           eb use ${{ env.PROD_API }}
           eb list
-      #- name: Run seeder
-      #  run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.PROD_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.PROD_API }} --region ${{ env.AWS_REGION }}
+          eb deploy
+      - name: Run seeder
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.PROD_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.PROD_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #
@@ -147,7 +148,7 @@ jobs:
         - name: Upload artifacts
           uses: actions/upload-artifact@v3
           with:
-            name: config_and_api
+          name: worker_config_and_env
             path: |
               .env
               .elasticbeanstalk/config.yml
@@ -170,7 +171,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::903706683286:role/helixpay-production-github-role
           role-session-name: Deploy-API-Production
-          aws-region: ap-southeast-1
+          aws-region: ${{ env.AWS_REGION }}
       - name: Install composer
         run: composer install
       - name: Install CLI
@@ -183,10 +184,11 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
-          name: config_and_api
+          name: worker_config_and_env
       - name: Exclude for worker production
         run: sudo rm -r .ebextensions/03_elb_health_check.config .ebextensions/04_http_to_https.config
       - name: Deploy to Elasticbeanstalk
         run: |
           eb use ${{ env.PROD_WORKER }}
           eb list
+          eb deploy

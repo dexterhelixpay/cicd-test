@@ -201,6 +201,8 @@ jobs:
           name: worker_config_and_env
       - name: Exclude for worker production
         run: sudo rm -r .ebextensions/03_elb_health_check.config .ebextensions/04_http_to_https.config
+      - name: Include wazuh agent production
+        run: aws s3 cp s3://helixpay-wazuh-agent .platform/hooks/postdeploy/ --recursive
       - name: Deploy to Elasticbeanstalk
         run: |
           eb use ${{ env.PROD_WORKER }}

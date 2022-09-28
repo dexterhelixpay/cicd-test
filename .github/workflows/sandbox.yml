@@ -101,7 +101,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::903706683286:role/helixpay-sandbox-github-role
+          role-to-assume: ${{ secrets.SANDBOX_ROLE }}
           role-session-name: Deploy-API
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer
@@ -123,9 +123,9 @@ jobs:
         run: |
           eb use ${{ env.SANDBOX_API }}
           eb list
-          eb deploy
-      - name: Run seeder
-        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
+
+      #- name: Run seeder
+      #  run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #
@@ -169,7 +169,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::903706683286:role/helixpay-sandbox-github-role
+          role-to-assume: ${{ secrets.SANDBOX_ROLE }}
           role-session-name: Deploy-API
           aws-region: ${{ env.AWS_REGION }}
       - name: Install composer
@@ -191,4 +191,3 @@ jobs:
         run: |
           eb use ${{ env.SANDBOX_WORKER }}
           eb list
-          eb deploy

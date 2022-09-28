@@ -50,6 +50,8 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -74,6 +76,8 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -94,10 +98,14 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: Set ownership
+        run: sudo chown -R $(id -u):$(id -g) $PWD
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -123,9 +131,9 @@ jobs:
         run: |
           eb use ${{ env.SANDBOX_API }}
           eb list
-
-      #- name: Run seeder
-      #  run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
+          eb deploy
+      - name: Run seeder
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.SANDBOX_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.SANDBOX_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #
@@ -138,6 +146,8 @@ jobs:
         image: cimg/php:8.1.9-node
         options: --user root
       steps:
+        - name: Setup file system permissions
+          run: sudo chmod 666 /var/run/docker.sock
         - name: Checkout
           uses: actions/checkout@v3
           with:
@@ -162,10 +172,14 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: Set ownership
+        run: sudo chown -R $(id -u):$(id -g) $PWD
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -191,3 +205,4 @@ jobs:
         run: |
           eb use ${{ env.SANDBOX_WORKER }}
           eb list
+          eb deploy

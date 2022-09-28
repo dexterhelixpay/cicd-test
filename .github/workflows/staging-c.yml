@@ -49,6 +49,8 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -73,6 +75,8 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -93,10 +97,14 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: Set ownership
+        run: sudo chown -R $(id -u):$(id -g) $PWD
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -137,6 +145,8 @@ jobs:
         image: cimg/php:8.1.9-node
         options: --user root
       steps:
+        - name: Setup file system permissions
+          run: sudo chmod 666 /var/run/docker.sock
         - name: Checkout
           uses: actions/checkout@v3
           with:
@@ -161,10 +171,14 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
+      - name: Setup file system permissions
+        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
+      - name: Set ownership
+        run: sudo chown -R $(id -u):$(id -g) $PWD
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

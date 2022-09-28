@@ -97,6 +97,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+      - run: git pull origin main
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -165,6 +166,7 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+      - run: git pull origin main
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

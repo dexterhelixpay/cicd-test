@@ -75,8 +75,6 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: Setup file system permissions
-        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -128,11 +126,11 @@ jobs:
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: |
-          eb use ${{ env.STAGING_A_API }}
+          eb use ${{ env.STAGING_B_API }}
           eb list
           eb deploy
       - name: Run seeder
-        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.STAGING_A_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.STAGING_A_API }} --region ${{ env.AWS_REGION }}
+        run: aws ssm send-command --document-name "AWS-RunShellScript" --targets "Key=tag:Name,Values=${{ env.STAGING_B_API }}" --cli-input-json file://release/migrate_seed.json --comment ${{ env.STAGING_B_API }} --region ${{ env.AWS_REGION }}
 
 ################################################################################################################
 #                                                     WORKER                                                   #

@@ -75,8 +75,6 @@ jobs:
       image: cimg/php:8.1.9-node
       options: --user root
     steps:
-      - name: Setup file system permissions
-        run: sudo chmod 666 /var/run/docker.sock
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -128,7 +126,7 @@ jobs:
         run: sudo rm -r .ebextensions/10_wazuh.config .platform/hooks/postdeploy/08_chown_storage.sh
       - name: Deploy to Elasticbeanstalk
         run: |
-          eb use ${{ env.DEV_B_API }}
+          eb use ${{ env.DEV_C_API }}
           eb list
           eb deploy
       - name: Run seeder

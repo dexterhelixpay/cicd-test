@@ -92,7 +92,7 @@ jobs:
 
   staging-api-deploy:
     runs-on: self-hosted
-    needs: [staging-build, staging-test]
+    needs: [staging-api-build, staging-api-test]
     container: 
       image: cimg/php:8.1.9-node
       options: --user root
